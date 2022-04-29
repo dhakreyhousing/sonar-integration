@@ -2,7 +2,7 @@ name: Build
 on:
   push:
     branches:
-      - main
+      - main # or the name of your main branch
 
 jobs:
   build:
@@ -33,4 +33,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=dhakreyhousing_sonar-integration_AYB09O-LyvCsnKpJw_ei
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
