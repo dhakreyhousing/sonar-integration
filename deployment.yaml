@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2022-04-29T13:22:41Z"
+  generation: 1
+  labels:
+    app: sonarqube-test
+  name: sonarqube-test
+  namespace: default
+  resourceVersion: "4740"
+  uid: c3367bd0-4401-4b9b-8d1b-bf239342bdb4
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: sonarqube-test
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: sonarqube-test
+    spec:
+      containers:
+      - image: sonarqube:8.9.8-community
+        imagePullPolicy: IfNotPresent
+        name: sonarqube
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-04-29T13:22:52Z"
+    lastUpdateTime: "2022-04-29T13:22:52Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2022-04-29T13:22:41Z"
+    lastUpdateTime: "2022-04-29T13:22:52Z"
+    message: ReplicaSet "sonarqube-test-8689957c7d" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+  creationTimestamp: "2022-04-29T13:24:06Z"
+  finalizers:
+    - service.kubernetes.io/load-balancer-cleanup
+  labels:
+    app: sonarqube-test
+  name: sonarqube-test
+  namespace: default
+  resourceVersion: "5485"
+  uid: 87fbb601-abe7-4650-91bd-2095d1b33230
+spec:
+  clusterIP: 10.60.5.127
+  clusterIPs:
+    - 10.60.5.127
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - nodePort: 31766
+      port: 9000
+      protocol: TCP
+      targetPort: 9000
+  selector:
+    app: sonarqube-test
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+      - ip: 35.238.0.242
