@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+  creationTimestamp: "2022-04-29T13:24:06Z"
+  finalizers:
+  - service.kubernetes.io/load-balancer-cleanup
+  labels:
+    app: sonarqube-test
+  name: sonarqube-test
+  namespace: default
+  resourceVersion: "5485"
+  uid: 87fbb601-abe7-4650-91bd-2095d1b33230
+spec:
+  clusterIP: 10.60.5.127
+  clusterIPs:
+  - 10.60.5.127
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 31766
+    port: 9000
+    protocol: TCP
+    targetPort: 9000
+  selector:
+    app: sonarqube-test
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 35.238.0.242
