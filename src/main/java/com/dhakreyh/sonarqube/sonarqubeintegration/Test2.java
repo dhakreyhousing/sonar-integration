@@ -5,7 +5,8 @@ public class Test2 {
         if(2 ==2)
             System.out.println("Test2");
 
-        if(3 ==3)
-            System.out.println("Test2");
+        if(4==4)
+            System.out.println("Test Github action");
+
     }
 }
